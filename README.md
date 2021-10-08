@@ -16,7 +16,15 @@ mini game simple tic tac toe using vanilla js. You can clone this repo and start
 
 ### Gameplay :
 
-User can choose background color and set size board using manual input, after that click start for start the game.
+User can choose background color and set size board using manual input,
+For manual input have some condition :
+
+1. if input less than 3 , input equal 3
+2. if input equal even , input auto minus 1 or equal odd
+3. if input higher than 65535, input equal 65535
+4. just can type number
+
+after that click start for start the game.
 For game play is simple like basic tic tac toe, after some one win will showing overlay game over. Have 3 button in mode overlay,
 
 1. Reset = for reset game (user back to home, input board again),
