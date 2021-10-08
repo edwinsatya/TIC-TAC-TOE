@@ -11,7 +11,7 @@
     <!-- setup game page -->
     <div id="setup-game">
       <div>TicTacToe</div>
-      <button onclick="startGame()">Start</button>
+      <button id="btn-start-game">Start</button>
       <div>
         <span
           >Board Size : <input id="input-size" type="text" /> X
@@ -20,7 +20,9 @@
       </div>
     </div>
     <!-- in game page -->
-    <div id="board" style="display: none"></div>
+    <div id="in-game">
+      <div id="board"></div>
+    </div>
 
     <!-- script -->
     <script src="./js/index.js"></script>

@@ -17,9 +17,14 @@ body {
   font-weight: 400;
 }
 
+.hide {
+  display: none;
+}
+
 #board {
   background-color: #0a0a0a;
   display: grid;
+  gap: 0.5rem;
   /* grid-template-columns: repeat(3, 1fr); */
 }
 
@@ -27,5 +32,4 @@ body {
   width: 4rem;
   height: 4rem;
   background-color: white;
-  border: 1px solid red;
 }
