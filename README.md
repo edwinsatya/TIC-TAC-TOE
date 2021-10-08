@@ -1,6 +1,6 @@
 # TIC-TAC-TOE
 
-mini game simple tic tac toe using vanilla js. You can clone this repo and start the game by accessing index.html. Or you can see the live demo [here](https://google.com)
+mini game simple tic tac toe using vanilla js. You can clone this repo and start the game by accessing index.html. Or you can see the live demo [here](http://tictactoe.edwinsatya.com/)
 
 ### Technology :
 
