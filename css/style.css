@@ -44,7 +44,9 @@ body {
 }
 
 .oCircle::before,
-.xCross::before {
+.xCross::before,
+.oCircle-hover::before,
+.xCross-hover::before {
   content: "\274C";
   font-size: 1.5rem;
   display: flex;
@@ -53,6 +55,13 @@ body {
   height: 100%;
 }
 
-.oCircle::before {
+.oCircle::before,
+.oCircle-hover::before {
   content: "\26AB";
+}
+
+.oCircle-hover::before,
+.xCross-hover::before {
+  opacity: 0.3;
+  filter: grayscale(100%);
 }

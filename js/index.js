@@ -62,7 +62,7 @@ function setupBoard() {
 
   for (let i = 0; i < state.board.length; i++) {
     let div = document.createElement("div");
-    div.classList.add("cell", "xCross");
+    div.classList.add("cell");
     board.append(div);
   }
 
