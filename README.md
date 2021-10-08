@@ -29,7 +29,7 @@ For game play is simple like basic tic tac toe, after some one win will showing 
 
 1. Reset = for reset game (user back to home, input board again),
 2. try again = For restart the game with same mode
-3. Exit = For close the game (close tab)
+3. Exit = For close the game (close tab, work if you open link in new tab, not manual typing the link)
 
 ### Implement :
 
