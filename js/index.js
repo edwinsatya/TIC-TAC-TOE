@@ -155,6 +155,12 @@ function actionClickBoard(e) {
   if (isWinner(valueBoardClicked)) {
     updateMessageTurn(`Player 0${currentTurn} Won !!!`);
     showWinHighLight(state.wonArr);
+    cells.forEach((cell) => {
+      cell.removeEventListener("mouseenter", actionMouseHoverIn);
+      cell.removeEventListener("mouseleave", actionMouseHoverOut);
+      cell.removeEventListener("click", actionClickBoard);
+      cell.style.cursor = "not-allowed";
+    });
     return;
   }
   updateCurrentTurn(newCurrentTurn);
