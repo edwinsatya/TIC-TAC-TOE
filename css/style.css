@@ -24,18 +24,17 @@ body {
 .message {
   padding: 1rem;
   text-align: center;
-  width: calc(4rem * 3 * 0.8rem * 2);
+  width: calc(4rem * 3 * 0.6rem * 2);
   background-color: lightcoral;
   border-radius: 0.3rem;
-  margin: 2rem 0;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  margin: 1rem 0rem;
 }
 
 .board {
   background-color: #0a0a0a;
   display: grid;
-  gap: 0.8rem;
-  /* grid-template-columns: repeat(3, 1fr); */
+  gap: 0.6rem;
 }
 
 .cell {
@@ -47,6 +46,11 @@ body {
 .oCircle::before,
 .xCross::before {
   content: "\274C";
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .oCircle::before {

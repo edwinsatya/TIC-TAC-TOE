@@ -4,6 +4,7 @@ let inputSize = document.getElementById("input-size");
 let inputSizeDisable = document.getElementById("input-size-disable");
 let btnStartGame = document.getElementById("btn-start-game");
 let board = document.getElementById("board");
+let message = document.getElementById("message");
 
 let state = {
   board: [],
@@ -24,6 +25,7 @@ function initialSetupGame() {
   inputSize.onblur = handleSizeOnBlur;
   btnStartGame.onclick = startGame;
   inGamePage.classList.add("hide");
+  message.classList.add("hide");
 }
 
 function handleSizeOnInput(e) {
@@ -60,11 +62,12 @@ function setupBoard() {
 
   for (let i = 0; i < state.board.length; i++) {
     let div = document.createElement("div");
-    div.classList.add("cell");
+    div.classList.add("cell", "xCross");
     board.append(div);
   }
 
   inGamePage.classList.remove("hide");
+  message.classList.remove("hide");
   setupGamePage.classList.add("hide");
 }
 
