@@ -7,6 +7,7 @@ const board = document.getElementById("board");
 const message = document.getElementById("message");
 const overlay = document.getElementById("overlay");
 const btnReset = document.getElementById("btn-reset");
+const btnTryAgain = document.getElementById("btn-try-again");
 let cells;
 
 const defaultState = {
@@ -63,6 +64,9 @@ function showOverlay() {
   setTimeout(() => {
     overlay.classList.add("active");
   }, 2500);
+
+  btnReset.addEventListener("click", resetGame);
+  btnTryAgain.addEventListener("click", tryAgainGame);
 }
 
 function handleSizeOnInput(e) {
@@ -111,10 +115,6 @@ function actionMouseHoverOut() {
   }
 }
 
-function resetState() {
-  state = defaultState;
-}
-
 function clearChild() {
   let child = board.lastElementChild;
   while (child) {
@@ -124,9 +124,21 @@ function clearChild() {
 }
 
 function resetGame() {
-  resetState();
+  state = defaultState;
   clearChild();
+  removeActionOverlayListener();
   initialSetupGame();
+}
+
+function tryAgainGame() {
+  state.board = [];
+  state.wonArr = [];
+  state.currentTurn = "1";
+  clearChild();
+  setupBoard();
+  overlay.classList.remove("active");
+  updateMessageTurn(`Player 0${state.currentTurn} Turn`);
+  addActionListener();
 }
 
 function addActionListener() {
@@ -139,8 +151,6 @@ function addActionListener() {
       once: true,
     });
   });
-
-  btnReset.addEventListener("click", resetGame);
 }
 
 function removeActionListener() {
@@ -150,6 +160,11 @@ function removeActionListener() {
     cell.removeEventListener("click", actionClickBoard);
     cell.style.cursor = "not-allowed";
   });
+}
+
+function removeActionOverlayListener() {
+  btnReset.removeEventListener("click", resetGame);
+  btnTryAgain.removeEventListener("click", tryAgainGame);
 }
 
 function setupBoard() {
@@ -174,14 +189,16 @@ function isWinner(valueTurn) {
   let verticalCount;
   let diagonalLeftToRight = 0;
   let diagonalRightToLeft = 0;
-  let wonArrHorizontal = [];
-  let wonArrVertical = [];
+  let wonArrHorizontal;
+  let wonArrVertical;
   let wonArrDiagonalLeftRight = [];
   let wonArrDiagonalRightLeft = [];
 
   for (let i = 0; i < gridSize; i++) {
     horizontalCount = 0;
     verticalCount = 0;
+    wonArrHorizontal = [];
+    wonArrVertical = [];
     for (let j = 0; j < gridSize; j++) {
       if (state.board[i * gridSize + j] == valueTurn) {
         horizontalCount++;
