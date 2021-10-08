@@ -5,6 +5,7 @@ const inputSizeDisable = document.getElementById("input-size-disable");
 const btnStartGame = document.getElementById("btn-start-game");
 const board = document.getElementById("board");
 const message = document.getElementById("message");
+let cells;
 
 const state = {
   board: [],
@@ -35,6 +36,12 @@ function updateCurrentTurn(currentTurn) {
 
 function updateBoardValue(value, index) {
   state.board[index] = value;
+}
+
+function showWinHightLight(arr) {
+  arr.forEach((i) => {
+    cells[i].classList.add("win-highlight");
+  });
 }
 
 function handleSizeOnInput(e) {
@@ -87,6 +94,10 @@ function isWinner(valueTurn) {
   let verticalCount;
   let diagonalLeftToRight = 0;
   let diagonalRightToLeft = 0;
+  let wonArrHorizontal = [];
+  let wonArrVertical = [];
+  let wonArrDiagonalLeftRight = [];
+  let wonArrDiagonalRightLeft = [];
 
   for (let i = 0; i < gridSize; i++) {
     horizontalCount = 0;
@@ -94,26 +105,37 @@ function isWinner(valueTurn) {
     for (let j = 0; j < gridSize; j++) {
       if (state.board[i * gridSize + j] == valueTurn) {
         horizontalCount++;
+        wonArrHorizontal.push(i * gridSize + j);
       }
       if (state.board[j * gridSize + i] == valueTurn) {
         verticalCount++;
+        wonArrVertical.push(j * gridSize + i);
       }
     }
     if (horizontalCount == gridSize) {
+      updateWonArr(wonArrHorizontal);
       return true;
     }
     if (verticalCount == gridSize) {
+      updateWonArr(wonArrVertical);
       return true;
     }
 
     if (state.board[i * gridSize + i] == valueTurn) {
       diagonalLeftToRight++;
+      wonArrDiagonalLeftRight.push(i * gridSize + i);
     }
     if (state.board[(gridSize - 1) * (i + 1)] == valueTurn) {
       diagonalRightToLeft++;
+      wonArrDiagonalRightLeft.push((gridSize - 1) * (i + 1));
     }
   }
-  if (diagonalLeftToRight == gridSize || diagonalRightToLeft == gridSize) {
+  if (diagonalLeftToRight == gridSize) {
+    updateWonArr(wonArrDiagonalLeftRight);
+    return true;
+  }
+  if (diagonalRightToLeft == gridSize) {
+    updateWonArr(wonArrDiagonalRightLeft);
     return true;
   }
   return false;
@@ -132,6 +154,7 @@ function actionClickBoard(e) {
   valueBoardClicked = state.board[indexBoardClicked];
   if (isWinner(valueBoardClicked)) {
     updateMessageTurn(`Player 0${currentTurn} Won !!!`);
+    showWinHightLight(state.wonArr);
     return;
   }
   updateCurrentTurn(newCurrentTurn);
@@ -156,7 +179,7 @@ function actionMouseHoverOut() {
 }
 
 function addActionListener() {
-  const cells = document.querySelectorAll(".cell");
+  cells = document.querySelectorAll(".cell");
 
   cells.forEach((cell) => {
     cell.addEventListener("mouseenter", actionMouseHoverIn);
