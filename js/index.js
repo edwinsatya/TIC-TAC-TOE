@@ -8,6 +8,7 @@ const message = document.getElementById("message");
 const overlay = document.getElementById("overlay");
 const btnReset = document.getElementById("btn-reset");
 const btnTryAgain = document.getElementById("btn-try-again");
+const btnExit = document.getElementById("btn-exit");
 let cells;
 
 const defaultState = {
@@ -67,6 +68,7 @@ function showOverlay() {
 
   btnReset.addEventListener("click", resetGame);
   btnTryAgain.addEventListener("click", tryAgainGame);
+  btnExit.addEventListener("click", exitGame);
 }
 
 function handleSizeOnInput(e) {
@@ -138,7 +140,13 @@ function tryAgainGame() {
   setupBoard();
   overlay.classList.remove("active");
   updateMessageTurn(`Player 0${state.currentTurn} Turn`);
+  removeActionOverlayListener();
   addActionListener();
+}
+
+function exitGame() {
+  removeActionOverlayListener();
+  window.close();
 }
 
 function addActionListener() {
@@ -165,6 +173,7 @@ function removeActionListener() {
 function removeActionOverlayListener() {
   btnReset.removeEventListener("click", resetGame);
   btnTryAgain.removeEventListener("click", tryAgainGame);
+  btnExit.removeEventListener("click", exitGame);
 }
 
 function setupBoard() {
