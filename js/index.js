@@ -24,14 +24,8 @@ function updateCurrentTurn(currentTurn) {
   message.innerHTML = `Player 0${currentTurn} Turn`;
 }
 
-function initialSetupGame() {
-  updateBoardSize(state.size);
-  updateCurrentTurn(state.currentTurn);
-  inputSize.oninput = handleSizeOnInput;
-  inputSize.onblur = handleSizeOnBlur;
-  btnStartGame.onclick = startGame;
-  inGamePage.classList.add("hide");
-  message.classList.add("hide");
+function updateBoardValue(value, index) {
+  state.board[index] = value;
 }
 
 function handleSizeOnInput(e) {
@@ -69,6 +63,7 @@ function setupBoard() {
   for (let i = 0; i < state.board.length; i++) {
     let div = document.createElement("div");
     div.classList.add("cell");
+    div.setAttribute("data-index", i);
     board.append(div);
   }
 
@@ -77,12 +72,17 @@ function setupBoard() {
   setupGamePage.classList.add("hide");
 }
 
-function actionClickBoard() {
-  let currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
-  let newCurrentTurn = state.currentTurn === "1" ? "2" : "1";
+function isWinner() {}
+
+function actionClickBoard(e) {
+  const currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
+  const currentTurn = state.currentTurn;
+  const newCurrentTurn = state.currentTurn === "1" ? "2" : "1";
+  const indexBoardClicked = e.target.dataset.index;
   this.classList.add(currentClass);
   this.classList.remove(`${currentClass}-hover`);
   this.style.cursor = "not-allowed";
+  updateBoardValue(currentTurn, indexBoardClicked);
   updateCurrentTurn(newCurrentTurn);
 }
 
@@ -119,6 +119,16 @@ function addActionListener() {
 function startGame() {
   setupBoard();
   addActionListener();
+}
+
+function initialSetupGame() {
+  updateBoardSize(state.size);
+  updateCurrentTurn(state.currentTurn);
+  inputSize.oninput = handleSizeOnInput;
+  inputSize.onblur = handleSizeOnBlur;
+  btnStartGame.onclick = startGame;
+  inGamePage.classList.add("hide");
+  message.classList.add("hide");
 }
 
 window.onload = () => {
