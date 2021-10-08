@@ -5,6 +5,7 @@ const inputSizeDisable = document.getElementById("input-size-disable");
 const btnStartGame = document.getElementById("btn-start-game");
 const board = document.getElementById("board");
 const message = document.getElementById("message");
+const overlay = document.getElementById("overlay");
 let cells;
 
 const state = {
@@ -48,6 +49,12 @@ function showHighLight(arr, isTie) {
       cells[i].classList.add("highlight");
     });
   }
+}
+
+function showOverlay() {
+  setTimeout(() => {
+    overlay.classList.add("active");
+  }, 2500);
 }
 
 function handleSizeOnInput(e) {
@@ -201,13 +208,15 @@ function actionClickBoard(e) {
     updateMessageTurn(`Player 0${currentTurn} Won !!!`);
     showHighLight(state.wonArr, false);
     removeActionListener();
+    showOverlay();
     return;
   } else {
     const isTie = state.board.every((el) => el != "");
     if (isTie) {
       updateMessageTurn(`It is a Tie !!!`);
-      removeActionListener();
       showHighLight(cells, true);
+      removeActionListener();
+      showOverlay();
       return;
     }
     updateCurrentTurn(newCurrentTurn);
