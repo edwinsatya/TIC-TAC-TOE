@@ -25,7 +25,7 @@ body {
   padding: 1rem;
   text-align: center;
   width: calc(4rem * 3 * 0.6rem * 2);
-  background-color: lightcoral;
+  background-color: #44bcd8;
   border-radius: 0.3rem;
   font-size: 2rem;
   margin: 1rem 0rem;
@@ -41,6 +41,7 @@ body {
   width: 4rem;
   height: 4rem;
   background-color: white;
+  cursor: pointer;
 }
 
 .oCircle::before,
@@ -64,4 +65,73 @@ body {
 .xCross-hover::before {
   opacity: 0.3;
   filter: grayscale(100%);
+}
+
+.overlay {
+  max-height: 0px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgb(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  color: whitesmoke;
+  overflow: hidden;
+}
+
+.overlay h1 {
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #44bcd8, #ffffff, #111);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.8rem;
+  border-radius: 0.3rem;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  background-size: 200% auto;
+  transition: all 0.5s ease-in-out;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-position: right;
+}
+
+.btn-reset {
+  background-image: linear-gradient(
+    to right,
+    #314755 0%,
+    #195e83 50%,
+    #314755 100%
+  );
+  color: white;
+}
+
+.btn-exit {
+  background-image: linear-gradient(
+    to right,
+    #491810 0%,
+    red 50%,
+    #491810 100%
+  );
+  color: white;
+}
+
+.overlay.active {
+  max-height: 100vh;
 }
