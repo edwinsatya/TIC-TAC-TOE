@@ -1,3 +1,4 @@
+//declare all document by id
 const setupGamePage = document.getElementById("setup-game");
 const inGamePage = document.getElementById("in-game");
 const inputSize = document.getElementById("input-size");
@@ -27,6 +28,7 @@ let state = {
   background: "white",
 };
 
+// update board size
 function updateBoardSize(size) {
   inputSize.value = size;
   inputSizeDisable.value = size;
@@ -34,23 +36,28 @@ function updateBoardSize(size) {
   inputSizeDisable.size = size.length;
 }
 
+// update arr[index] in win condition for show highlight
 function updateWonArr(arr) {
   state.wonArr = arr;
 }
 
+// change turn message
 function updateMessageTurn(msg) {
   message.innerHTML = msg;
 }
 
+// update current turn
 function updateCurrentTurn(currentTurn) {
   state.currentTurn = currentTurn;
   updateMessageTurn(`Player 0${currentTurn} Turn`);
 }
 
+// update board value with 1 or 2 and index board
 function updateBoardValue(value, index) {
   state.board[index] = value;
 }
 
+// show highlight path if win or lose
 function showHighLight(arr, isTie) {
   if (isTie) {
     cells.forEach((cell) => {
@@ -63,6 +70,7 @@ function showHighLight(arr, isTie) {
   }
 }
 
+// show overlay game over
 function showOverlay() {
   setTimeout(() => {
     overlay.classList.add("active");
@@ -73,6 +81,7 @@ function showOverlay() {
   btnExit.addEventListener("click", exitGame);
 }
 
+// handle size if user on input/change input
 function handleSizeOnInput(e) {
   let value = e.target.value.replace(/[^0-9]+/gi, "");
   if (value.length > 1 && value.startsWith("0")) {
@@ -88,6 +97,7 @@ function handleSizeOnInput(e) {
   updateBoardSize(state.size);
 }
 
+// handle size if user leave from input
 function handleSizeOnBlur(e) {
   let value = Number(e.target.value);
   if (value < 3) {
@@ -101,6 +111,7 @@ function handleSizeOnBlur(e) {
   updateBoardSize(state.size);
 }
 
+// for effect like shadow "x" or "o"
 function actionMouseHoverIn() {
   let currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
   if (this.classList.contains("xCross") || this.classList.contains("oCircle")) {
@@ -110,6 +121,7 @@ function actionMouseHoverIn() {
   }
 }
 
+// delete effect shadow "x" or "o"
 function actionMouseHoverOut() {
   if (
     this.classList.contains("xCross-hover") ||
@@ -119,6 +131,7 @@ function actionMouseHoverOut() {
   }
 }
 
+// clear child element inside div.board
 function clearChild() {
   let child = board.lastElementChild;
   while (child) {
@@ -127,6 +140,7 @@ function clearChild() {
   }
 }
 
+// for reset the game
 function resetGame() {
   state = { ...defaultState };
   updateBoardSize(state.size);
@@ -136,6 +150,7 @@ function resetGame() {
   initialSetupGame();
 }
 
+// for try again the game
 function tryAgainGame() {
   state.board = [];
   state.wonArr = [];
@@ -148,11 +163,13 @@ function tryAgainGame() {
   addActionListener();
 }
 
+// for exit the game (close page/tab)
 function exitGame() {
   removeActionOverlayListener();
   window.close();
 }
 
+// for add all listener in board action
 function addActionListener() {
   cells = document.querySelectorAll(".cell");
 
@@ -165,6 +182,7 @@ function addActionListener() {
   });
 }
 
+// for remove all listener in board action
 function removeActionListener() {
   cells.forEach((cell) => {
     cell.removeEventListener("mouseenter", actionMouseHoverIn);
@@ -174,12 +192,14 @@ function removeActionListener() {
   });
 }
 
+// for remove all listener in overlay (reset ,try again)
 function removeActionOverlayListener() {
   btnReset.removeEventListener("click", resetGame);
   btnTryAgain.removeEventListener("click", tryAgainGame);
   btnExit.removeEventListener("click", exitGame);
 }
 
+// setup board (create board by size, and change condition home to in game)
 function setupBoard() {
   state.board = new Array(Number(state.size) * Number(state.size)).fill("");
   board.style = `grid-template-columns: repeat(${state.size}, 1fr)`;
@@ -196,6 +216,7 @@ function setupBoard() {
   setupGamePage.classList.add("hide");
 }
 
+// logic for check win
 function isWinner(valueTurn) {
   const gridSize = Number(state.size);
   let horizontalCount;
@@ -213,56 +234,65 @@ function isWinner(valueTurn) {
     wonArrHorizontal = [];
     wonArrVertical = [];
     for (let j = 0; j < gridSize; j++) {
+      // like [0,1,2]
       if (state.board[i * gridSize + j] == valueTurn) {
         horizontalCount++;
         wonArrHorizontal.push(i * gridSize + j);
       }
+      // like [0,3,6]
       if (state.board[j * gridSize + i] == valueTurn) {
         verticalCount++;
         wonArrVertical.push(j * gridSize + i);
       }
     }
     if (horizontalCount == gridSize) {
+      // update arr[index path win condition]
       updateWonArr(wonArrHorizontal);
       return true;
     }
     if (verticalCount == gridSize) {
+      // update arr[index path win condition]
       updateWonArr(wonArrVertical);
       return true;
     }
-
+    // like [0,4,8]
     if (state.board[i * gridSize + i] == valueTurn) {
       diagonalLeftToRight++;
       wonArrDiagonalLeftRight.push(i * gridSize + i);
     }
+    // like [2,4,6]
     if (state.board[(gridSize - 1) * (i + 1)] == valueTurn) {
       diagonalRightToLeft++;
       wonArrDiagonalRightLeft.push((gridSize - 1) * (i + 1));
     }
   }
   if (diagonalLeftToRight == gridSize) {
+    // update arr[index path win condition]
     updateWonArr(wonArrDiagonalLeftRight);
     return true;
   }
   if (diagonalRightToLeft == gridSize) {
+    // update arr[index path win condition]
     updateWonArr(wonArrDiagonalRightLeft);
     return true;
   }
   return false;
 }
 
+// all condition if user click box of board
 function actionClickBoard(e) {
   const currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
   const currentTurn = state.currentTurn;
   const newCurrentTurn = state.currentTurn === "1" ? "2" : "1";
   const indexBoardClicked = e.target.dataset.index;
   let valueBoardClicked;
-  this.classList.add(currentClass);
-  this.classList.remove(`${currentClass}-hover`);
+  this.classList.add(currentClass); // set 'X' or 'O'
+  this.classList.remove(`${currentClass}-hover`); // remove hover if already selected
   this.style.cursor = "not-allowed";
   updateBoardValue(currentTurn, indexBoardClicked);
   valueBoardClicked = state.board[indexBoardClicked];
   if (isWinner(valueBoardClicked)) {
+    // check win condition
     updateMessageTurn(`Player 0${currentTurn} Won !!!`);
     showHighLight(state.wonArr, false);
     removeActionListener();
@@ -271,6 +301,7 @@ function actionClickBoard(e) {
   } else {
     const isTie = state.board.every((el) => el != "");
     if (isTie) {
+      // if tie
       updateMessageTurn(`It is a Tie !!!`);
       showHighLight(cells, true);
       removeActionListener();
@@ -281,6 +312,7 @@ function actionClickBoard(e) {
   }
 }
 
+// start the game (iam using set time out for see the auto change because some condition)
 function startGame() {
   setTimeout(() => {
     setupBoard();
@@ -288,12 +320,14 @@ function startGame() {
   }, 800);
 }
 
+// for change background color
 function changeBackground(e) {
   const body = document.body;
   body.style = `background-color:${e.target.dataset.color};`;
   state.background = e.target.dataset.color;
 }
 
+// initial setup game
 function initialSetupGame() {
   document.querySelectorAll(".bg-list").forEach((el) => {
     el.addEventListener("click", changeBackground);
@@ -310,5 +344,6 @@ function initialSetupGame() {
 }
 
 window.onload = () => {
+  // the first load of page
   initialSetupGame();
 };
