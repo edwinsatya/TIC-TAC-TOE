@@ -16,6 +16,7 @@ const defaultState = {
   wonArr: [],
   size: "3",
   currentTurn: "1",
+  background: "white",
 };
 
 let state = {
@@ -23,6 +24,7 @@ let state = {
   wonArr: [],
   size: "3",
   currentTurn: "1",
+  background: "white",
 };
 
 function updateBoardSize(size) {
@@ -64,7 +66,7 @@ function showHighLight(arr, isTie) {
 function showOverlay() {
   setTimeout(() => {
     overlay.classList.add("active");
-  }, 2500);
+  }, 2000);
 
   btnReset.addEventListener("click", resetGame);
   btnTryAgain.addEventListener("click", tryAgainGame);
@@ -286,7 +288,16 @@ function startGame() {
   }, 800);
 }
 
+function changeBackground(e) {
+  const body = document.body;
+  body.style = `background-color:${e.target.dataset.color};`;
+  state.background = e.target.dataset.color;
+}
+
 function initialSetupGame() {
+  document.querySelectorAll(".bg-list").forEach((el) => {
+    el.addEventListener("click", changeBackground);
+  });
   updateBoardSize(state.size);
   updateCurrentTurn(state.currentTurn);
   inputSize.oninput = handleSizeOnInput;

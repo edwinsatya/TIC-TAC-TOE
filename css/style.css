@@ -25,6 +25,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 1rem 0;
 }
 
 .input-size {
@@ -57,6 +58,44 @@ body {
   color: white;
 }
 
+.title-choose-bg {
+  text-align: center;
+}
+
+.wrapper-bg-list {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.bg-list {
+  border: 1px solid black;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.bg-list.active {
+  border: 2px solid orange;
+}
+
+.bg-list-1 {
+  background-color: white;
+}
+
+.bg-list-2 {
+  background-color: brown;
+}
+
+.bg-list-3 {
+  background-color: cadetblue;
+}
+
+.bg-list-4 {
+  background-color: cyan;
+}
+
 .hide {
   display: none;
 }
@@ -78,10 +117,11 @@ body {
 }
 
 .cell {
-  width: 4rem;
-  height: 4rem;
+  width: 6rem;
+  height: 6rem;
   background-color: white;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .oCircle::before,

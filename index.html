@@ -18,8 +18,15 @@
     <!-- setup game page -->
     <div id="setup-game">
       <div class="title-game">TicTacToe Game</div>
-      <div class="wrapper-btn-start">
-        <button id="btn-start-game" class="btn btn-start">Start</button>
+
+      <div>
+        <h2 class="title-choose-bg">Choose Background</h2>
+      </div>
+      <div class="wrapper-bg-list">
+        <div data-color="white" class="bg-list bg-list-1"></div>
+        <div data-color="brown" class="bg-list bg-list-2"></div>
+        <div data-color="cadetblue" class="bg-list bg-list-3"></div>
+        <div data-color="cyan" class="bg-list bg-list-4"></div>
       </div>
       <div class="wrapper-input-size">
         <span class="label-input-size">Board Size : </span>
@@ -31,6 +38,10 @@
           disabled
           type="text"
         />
+      </div>
+
+      <div class="wrapper-btn-start">
+        <button id="btn-start-game" class="btn btn-start">Start</button>
       </div>
     </div>
     <!-- in game page -->
