@@ -38,7 +38,7 @@ function updateBoardValue(value, index) {
   state.board[index] = value;
 }
 
-function showWinHightLight(arr) {
+function showWinHighLight(arr) {
   arr.forEach((i) => {
     cells[i].classList.add("win-highlight");
   });
@@ -154,7 +154,7 @@ function actionClickBoard(e) {
   valueBoardClicked = state.board[indexBoardClicked];
   if (isWinner(valueBoardClicked)) {
     updateMessageTurn(`Player 0${currentTurn} Won !!!`);
-    showWinHightLight(state.wonArr);
+    showWinHighLight(state.wonArr);
     return;
   }
   updateCurrentTurn(newCurrentTurn);
