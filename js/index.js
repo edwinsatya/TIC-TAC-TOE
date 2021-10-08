@@ -8,6 +8,7 @@ const message = document.getElementById("message");
 
 const state = {
   board: [],
+  wonArr: [],
   size: "3",
   currentTurn: "1",
 };
@@ -19,9 +20,17 @@ function updateBoardSize(size) {
   inputSizeDisable.size = size.length;
 }
 
+function updateWonArr(arr) {
+  state.wonArr = arr;
+}
+
+function updateMessageTurn(msg) {
+  message.innerHTML = msg;
+}
+
 function updateCurrentTurn(currentTurn) {
   state.currentTurn = currentTurn;
-  message.innerHTML = `Player 0${currentTurn} Turn`;
+  updateMessageTurn(`Player 0${currentTurn} Turn`);
 }
 
 function updateBoardValue(value, index) {
@@ -72,17 +81,59 @@ function setupBoard() {
   setupGamePage.classList.add("hide");
 }
 
-function isWinner() {}
+function isWinner(valueTurn) {
+  const gridSize = Number(state.size);
+  let horizontalCount;
+  let verticalCount;
+  let diagonalLeftToRight = 0;
+  let diagonalRightToLeft = 0;
+
+  for (let i = 0; i < gridSize; i++) {
+    horizontalCount = 0;
+    verticalCount = 0;
+    for (let j = 0; j < gridSize; j++) {
+      if (state.board[i * gridSize + j] == valueTurn) {
+        horizontalCount++;
+      }
+      if (state.board[j * gridSize + i] == valueTurn) {
+        verticalCount++;
+      }
+    }
+    if (horizontalCount == gridSize) {
+      return true;
+    }
+    if (verticalCount == gridSize) {
+      return true;
+    }
+
+    if (state.board[i * gridSize + i] == valueTurn) {
+      diagonalLeftToRight++;
+    }
+    if (state.board[(gridSize - 1) * (i + 1)] == valueTurn) {
+      diagonalRightToLeft++;
+    }
+  }
+  if (diagonalLeftToRight == gridSize || diagonalRightToLeft == gridSize) {
+    return true;
+  }
+  return false;
+}
 
 function actionClickBoard(e) {
   const currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
   const currentTurn = state.currentTurn;
   const newCurrentTurn = state.currentTurn === "1" ? "2" : "1";
   const indexBoardClicked = e.target.dataset.index;
+  let valueBoardClicked;
   this.classList.add(currentClass);
   this.classList.remove(`${currentClass}-hover`);
   this.style.cursor = "not-allowed";
   updateBoardValue(currentTurn, indexBoardClicked);
+  valueBoardClicked = state.board[indexBoardClicked];
+  if (isWinner(valueBoardClicked)) {
+    updateMessageTurn(`Player 0${currentTurn} Won !!!`);
+    return;
+  }
   updateCurrentTurn(newCurrentTurn);
 }
 
