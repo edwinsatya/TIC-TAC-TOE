@@ -1,15 +1,15 @@
-let setupGamePage = document.getElementById("setup-game");
-let inGamePage = document.getElementById("in-game");
-let inputSize = document.getElementById("input-size");
-let inputSizeDisable = document.getElementById("input-size-disable");
-let btnStartGame = document.getElementById("btn-start-game");
-let board = document.getElementById("board");
-let message = document.getElementById("message");
+const setupGamePage = document.getElementById("setup-game");
+const inGamePage = document.getElementById("in-game");
+const inputSize = document.getElementById("input-size");
+const inputSizeDisable = document.getElementById("input-size-disable");
+const btnStartGame = document.getElementById("btn-start-game");
+const board = document.getElementById("board");
+const message = document.getElementById("message");
 
-let state = {
+const state = {
   board: [],
   size: "3",
-  turn: "O",
+  currentTurn: "1",
 };
 
 function updateBoardSize(size) {
@@ -19,8 +19,14 @@ function updateBoardSize(size) {
   inputSizeDisable.size = size.length;
 }
 
+function updateCurrentTurn(currentTurn) {
+  state.currentTurn = currentTurn;
+  message.innerHTML = `Player 0${currentTurn} Turn`;
+}
+
 function initialSetupGame() {
   updateBoardSize(state.size);
+  updateCurrentTurn(state.currentTurn);
   inputSize.oninput = handleSizeOnInput;
   inputSize.onblur = handleSizeOnBlur;
   btnStartGame.onclick = startGame;
@@ -71,8 +77,26 @@ function setupBoard() {
   setupGamePage.classList.add("hide");
 }
 
+function actionClickBoard() {
+  let currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
+  let newCurrentTurn = state.currentTurn === "1" ? "2" : "1";
+  this.classList.add(currentClass);
+  updateCurrentTurn(newCurrentTurn);
+}
+
+function addActionListener() {
+  const cells = document.querySelectorAll(".cell");
+
+  cells.forEach((cell) => {
+    cell.addEventListener("click", actionClickBoard, {
+      once: true,
+    });
+  });
+}
+
 function startGame() {
   setupBoard();
+  addActionListener();
 }
 
 window.onload = () => {
