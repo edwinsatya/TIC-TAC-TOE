@@ -38,10 +38,16 @@ function updateBoardValue(value, index) {
   state.board[index] = value;
 }
 
-function showWinHighLight(arr) {
-  arr.forEach((i) => {
-    cells[i].classList.add("win-highlight");
-  });
+function showHighLight(arr, isTie) {
+  if (isTie) {
+    cells.forEach((cell) => {
+      cell.classList.add("highlight");
+    });
+  } else {
+    arr.forEach((i) => {
+      cells[i].classList.add("highlight");
+    });
+  }
 }
 
 function handleSizeOnInput(e) {
@@ -193,15 +199,15 @@ function actionClickBoard(e) {
   valueBoardClicked = state.board[indexBoardClicked];
   if (isWinner(valueBoardClicked)) {
     updateMessageTurn(`Player 0${currentTurn} Won !!!`);
-    showWinHighLight(state.wonArr);
+    showHighLight(state.wonArr, false);
     removeActionListener();
     return;
   } else {
     const isTie = state.board.every((el) => el != "");
-    console.log(isTie);
     if (isTie) {
       updateMessageTurn(`It is a Tie !!!`);
       removeActionListener();
+      showHighLight(cells, true);
       return;
     }
     updateCurrentTurn(newCurrentTurn);
