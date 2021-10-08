@@ -81,13 +81,35 @@ function actionClickBoard() {
   let currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
   let newCurrentTurn = state.currentTurn === "1" ? "2" : "1";
   this.classList.add(currentClass);
+  this.classList.remove(`${currentClass}-hover`);
+  this.style.cursor = "not-allowed";
   updateCurrentTurn(newCurrentTurn);
+}
+
+function actionMouseHoverIn() {
+  let currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
+  if (this.classList.contains("xCross") || this.classList.contains("oCircle")) {
+    this.style.cursor = "not-allowed";
+  } else {
+    this.classList.add(`${currentClass}-hover`);
+  }
+}
+
+function actionMouseHoverOut() {
+  if (
+    this.classList.contains("xCross-hover") ||
+    this.classList.contains("oCircle-hover")
+  ) {
+    this.classList.remove("xCross-hover", "oCircle-hover");
+  }
 }
 
 function addActionListener() {
   const cells = document.querySelectorAll(".cell");
 
   cells.forEach((cell) => {
+    cell.addEventListener("mouseenter", actionMouseHoverIn);
+    cell.addEventListener("mouseleave", actionMouseHoverOut);
     cell.addEventListener("click", actionClickBoard, {
       once: true,
     });
