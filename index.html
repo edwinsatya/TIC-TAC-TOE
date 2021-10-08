@@ -17,13 +17,20 @@
   <body>
     <!-- setup game page -->
     <div id="setup-game">
-      <div>TicTacToe</div>
-      <button id="btn-start-game">Start</button>
-      <div>
-        <span
-          >Board Size : <input id="input-size" type="text" /> X
-          <input id="input-size-disable" disabled type="text" />
-        </span>
+      <div class="title-game">TicTacToe Game</div>
+      <div class="wrapper-btn-start">
+        <button id="btn-start-game" class="btn btn-start">Start</button>
+      </div>
+      <div class="wrapper-input-size">
+        <span class="label-input-size">Board Size : </span>
+
+        <input id="input-size" class="input-size" type="text" /> X
+        <input
+          id="input-size-disable"
+          class="input-size"
+          disabled
+          type="text"
+        />
       </div>
     </div>
     <!-- in game page -->

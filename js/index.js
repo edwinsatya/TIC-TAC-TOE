@@ -126,8 +126,10 @@ function clearChild() {
 }
 
 function resetGame() {
-  state = defaultState;
+  state = { ...defaultState };
+  updateBoardSize(state.size);
   clearChild();
+  updateMessageTurn(`Player 0${state.currentTurn} Turn`);
   removeActionOverlayListener();
   initialSetupGame();
 }
@@ -278,8 +280,10 @@ function actionClickBoard(e) {
 }
 
 function startGame() {
-  setupBoard();
-  addActionListener();
+  setTimeout(() => {
+    setupBoard();
+    addActionListener();
+  }, 800);
 }
 
 function initialSetupGame() {

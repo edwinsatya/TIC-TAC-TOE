@@ -17,6 +17,46 @@ body {
   font-weight: 400;
 }
 
+.title-game {
+  font-size: 3.5rem;
+}
+
+.wrapper-input-size {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-size {
+  font-size: 1rem;
+}
+
+.label-input-size {
+  color: #195e83;
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+.wrapper-btn-start {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.btn-start {
+  padding: 1rem;
+  width: 40%;
+  cursor: pointer;
+  background-image: linear-gradient(
+    to right,
+    #314755 0%,
+    #195e83 50%,
+    gray 100%
+  );
+  color: white;
+}
+
 .hide {
   display: none;
 }
