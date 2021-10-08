@@ -1,5 +1,6 @@
 let inputSize = document.getElementById("input-size");
 let inputSizeDisable = document.getElementById("input-size-disable");
+let board = document.getElementById("board");
 
 let state = {
   board: [],
@@ -7,11 +8,15 @@ let state = {
   turn: "O",
 };
 
-function initialSetup() {
-  inputSize.value = state.size;
-  inputSizeDisable.value = state.size;
-  inputSize.size = state.size.length;
-  inputSizeDisable.size = state.size.length;
+function updateBoardSize(size) {
+  inputSize.value = size;
+  inputSizeDisable.value = size;
+  inputSize.size = size.length;
+  inputSizeDisable.size = size.length;
+}
+
+function initialSetupGame() {
+  updateBoardSize(state.size);
   inputSize.oninput = handleSizeOnInput;
   inputSize.onblur = handleSizeOnBlur;
 }
@@ -32,34 +37,33 @@ function handleSizeOnInput(e) {
 }
 
 function handleSizeOnBlur(e) {
-  let value = e.target.value.replace(/[^0-9]+/gi, "");
-
+  let value = Number(e.target.value);
   if (value < 3) {
     value = 3;
   }
   if (value % 2 == 0) {
-    value--;
+    value = value - 1;
   }
-  state.size = value;
+  state.size = String(value);
 
   updateBoardSize(state.size);
 }
 
-function updateBoardSize(size) {
-  inputSize.value = size;
-  inputSizeDisable.value = size;
-  inputSize.size = size.length;
-  inputSizeDisable.size = size.length;
-  console.log(state);
+function setupBoard() {
+  state.board = new Array(Number(state.size) * Number(state.size)).fill("");
+  board.style = `grid-template-columns: repeat(${state.size}, 1fr)`;
+
+  for (let i = 0; i < state.board.length; i++) {
+    let div = document.createElement("div");
+    div.classList.add("cell");
+    board.append(div);
+  }
 }
 
-// initialSetup();
-
 function startGame() {
-  state.size = parseInt(inputSize.value);
-  state.board = new Array(state.size * state.size).fill("");
+  setupBoard();
 }
 
 window.onload = () => {
-  initialSetup();
+  initialSetupGame();
 };
