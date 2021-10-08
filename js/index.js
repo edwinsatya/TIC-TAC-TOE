@@ -197,6 +197,9 @@ function removeActionOverlayListener() {
   btnReset.removeEventListener("click", resetGame);
   btnTryAgain.removeEventListener("click", tryAgainGame);
   btnExit.removeEventListener("click", exitGame);
+  document.querySelectorAll(".bg-list").forEach((el) => {
+    el.removeEventListener("click", changeBackground);
+  });
 }
 
 // setup board (create board by size, and change condition home to in game)
