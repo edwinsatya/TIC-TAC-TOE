@@ -6,9 +6,17 @@ const btnStartGame = document.getElementById("btn-start-game");
 const board = document.getElementById("board");
 const message = document.getElementById("message");
 const overlay = document.getElementById("overlay");
+const btnReset = document.getElementById("btn-reset");
 let cells;
 
-const state = {
+const defaultState = {
+  board: [],
+  wonArr: [],
+  size: "3",
+  currentTurn: "1",
+};
+
+let state = {
   board: [],
   wonArr: [],
   size: "3",
@@ -103,6 +111,24 @@ function actionMouseHoverOut() {
   }
 }
 
+function resetState() {
+  state = defaultState;
+}
+
+function clearChild() {
+  let child = board.lastElementChild;
+  while (child) {
+    board.removeChild(child);
+    child = board.lastElementChild;
+  }
+}
+
+function resetGame() {
+  resetState();
+  clearChild();
+  initialSetupGame();
+}
+
 function addActionListener() {
   cells = document.querySelectorAll(".cell");
 
@@ -113,6 +139,8 @@ function addActionListener() {
       once: true,
     });
   });
+
+  btnReset.addEventListener("click", resetGame);
 }
 
 function removeActionListener() {
@@ -234,6 +262,8 @@ function initialSetupGame() {
   inputSize.oninput = handleSizeOnInput;
   inputSize.onblur = handleSizeOnBlur;
   btnStartGame.onclick = startGame;
+  setupGamePage.classList.remove("hide");
+  overlay.classList.remove("active");
   inGamePage.classList.add("hide");
   message.classList.add("hide");
 }

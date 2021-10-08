@@ -117,7 +117,7 @@ body {
     to right,
     #314755 0%,
     #195e83 50%,
-    #314755 100%
+    #fefefe 100%
   );
   color: white;
 }
@@ -128,6 +128,18 @@ body {
     #491810 0%,
     red 50%,
     #491810 100%
+  );
+  color: white;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.btn-try-again {
+  background-image: linear-gradient(
+    to right,
+    #314755 0%,
+    green 50%,
+    #fefefe 100%
   );
   color: white;
 }
