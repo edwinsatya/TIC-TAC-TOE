@@ -72,6 +72,45 @@ function handleSizeOnBlur(e) {
   updateBoardSize(state.size);
 }
 
+function actionMouseHoverIn() {
+  let currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
+  if (this.classList.contains("xCross") || this.classList.contains("oCircle")) {
+    this.style.cursor = "not-allowed";
+  } else {
+    this.classList.add(`${currentClass}-hover`);
+  }
+}
+
+function actionMouseHoverOut() {
+  if (
+    this.classList.contains("xCross-hover") ||
+    this.classList.contains("oCircle-hover")
+  ) {
+    this.classList.remove("xCross-hover", "oCircle-hover");
+  }
+}
+
+function addActionListener() {
+  cells = document.querySelectorAll(".cell");
+
+  cells.forEach((cell) => {
+    cell.addEventListener("mouseenter", actionMouseHoverIn);
+    cell.addEventListener("mouseleave", actionMouseHoverOut);
+    cell.addEventListener("click", actionClickBoard, {
+      once: true,
+    });
+  });
+}
+
+function removeActionListener() {
+  cells.forEach((cell) => {
+    cell.removeEventListener("mouseenter", actionMouseHoverIn);
+    cell.removeEventListener("mouseleave", actionMouseHoverOut);
+    cell.removeEventListener("click", actionClickBoard);
+    cell.style.cursor = "not-allowed";
+  });
+}
+
 function setupBoard() {
   state.board = new Array(Number(state.size) * Number(state.size)).fill("");
   board.style = `grid-template-columns: repeat(${state.size}, 1fr)`;
@@ -155,45 +194,18 @@ function actionClickBoard(e) {
   if (isWinner(valueBoardClicked)) {
     updateMessageTurn(`Player 0${currentTurn} Won !!!`);
     showWinHighLight(state.wonArr);
-    cells.forEach((cell) => {
-      cell.removeEventListener("mouseenter", actionMouseHoverIn);
-      cell.removeEventListener("mouseleave", actionMouseHoverOut);
-      cell.removeEventListener("click", actionClickBoard);
-      cell.style.cursor = "not-allowed";
-    });
+    removeActionListener();
     return;
-  }
-  updateCurrentTurn(newCurrentTurn);
-}
-
-function actionMouseHoverIn() {
-  let currentClass = state.currentTurn === "1" ? "xCross" : "oCircle";
-  if (this.classList.contains("xCross") || this.classList.contains("oCircle")) {
-    this.style.cursor = "not-allowed";
   } else {
-    this.classList.add(`${currentClass}-hover`);
+    const isTie = state.board.every((el) => el != "");
+    console.log(isTie);
+    if (isTie) {
+      updateMessageTurn(`It is a Tie !!!`);
+      removeActionListener();
+      return;
+    }
+    updateCurrentTurn(newCurrentTurn);
   }
-}
-
-function actionMouseHoverOut() {
-  if (
-    this.classList.contains("xCross-hover") ||
-    this.classList.contains("oCircle-hover")
-  ) {
-    this.classList.remove("xCross-hover", "oCircle-hover");
-  }
-}
-
-function addActionListener() {
-  cells = document.querySelectorAll(".cell");
-
-  cells.forEach((cell) => {
-    cell.addEventListener("mouseenter", actionMouseHoverIn);
-    cell.addEventListener("mouseleave", actionMouseHoverOut);
-    cell.addEventListener("click", actionClickBoard, {
-      once: true,
-    });
-  });
 }
 
 function startGame() {
