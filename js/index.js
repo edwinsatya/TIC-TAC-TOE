@@ -165,7 +165,6 @@ function tryAgainGame() {
 
 // for exit the game (close page/tab)
 function exitGame() {
-  removeActionOverlayListener();
   window.close();
 }
 
@@ -348,5 +347,10 @@ function initialSetupGame() {
 
 window.onload = () => {
   // the first load of page
+  window.open("https://tictactoe.edwinsatya.com", "_blank");
+  window.setTimeout(function () {
+    this.close();
+  }, 1000);
+
   initialSetupGame();
 };
