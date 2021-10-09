@@ -29,7 +29,7 @@ The game play is just like basic tic tac toe, and after someone win it will show
 
 1. Reset = to reset game (user back to home, input board size and background color again),
 2. Try Again = to restart the game with the previous settings
-3. Exit = to close the game (close tab, only work when you open link in new tab, not manually type the link)
+3. Exit = to close the game (since browser has limitation on window.close usage, closing game/tab only work when you open the link in new tab (right click + open in new tab). Without it, the app won't close)
 
 ### Implementation :
 
