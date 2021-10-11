@@ -165,6 +165,9 @@ function tryAgainGame() {
 
 // for exit the game (close page/tab)
 function exitGame() {
+  alert(
+    `since browser has limitation on window.close usage, closing game/tab only work when you open the link in new tab (right click + open in new tab). Without it, the app won't close`
+  );
   window.close();
 }
 
